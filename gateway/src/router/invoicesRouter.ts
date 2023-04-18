@@ -1,6 +1,7 @@
-import * as invoiceController from "controllers/invoicesController";
 import express from "express";
+import * as invoiceController from "../controllers/invoicesController";
+import { invoiceValidator } from "../middleware/invoiceValidator";
 
 export const router = express.Router();
 
-router.get("/", invoiceController.getInvoices);
+router.get("/", invoiceValidator, invoiceController.getInvoices);

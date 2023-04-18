@@ -1,6 +1,12 @@
-import * as singleInvoiceController from "controllers/singleInvoiceController";
 import express from "express";
+import {
+  createInvoice,
+  getInvoice,
+} from "../controllers/singleInvoiceController";
+import { invoiceValidator } from "../middleware/invoiceValidator";
 
 export const router = express.Router();
 
-router.get("/", singleInvoiceController.getInvoice);
+router.get("/", getInvoice);
+
+router.post("/", invoiceValidator, createInvoice);
