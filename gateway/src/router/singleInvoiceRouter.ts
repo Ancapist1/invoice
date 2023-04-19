@@ -9,4 +9,4 @@ export const router = express.Router();
 
 router.get("/", getInvoice);
 
-router.post("/", invoiceValidator, createInvoice);
+router.patch("/", invoiceValidator, createInvoice);
