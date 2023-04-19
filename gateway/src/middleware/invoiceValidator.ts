@@ -17,7 +17,35 @@ export function invoiceValidator(
     }
     next();
   } else {
-    res.send("No auth");
+    res.send("No invoices provided!");
+  }
+}
+
+export function invoicesValidator(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  if (req.body) {
+    const errors: Error[] = [];
+    req.body.forEach((invoice: Invoice) => {
+      const { error, value } = invoiceSchema.validate(invoice);
+      if (error) {
+        errors.push(error);
+      }
+
+      if (!isTotalPriceCorrect(invoice)) {
+        errors.push(
+          new Error(`Invoice with id: ${invoice.id} has incorrect total price!`)
+        );
+      }
+    });
+    if (!errors.length) {
+      res.status(400).send(errors);
+    }
+    next();
+  } else {
+    res.send("No invoices provided!");
   }
 }
 
